@@ -52,7 +52,7 @@ pipeline {
     }
     */
 
-     ---------- OPTIONAL: Docker Swarm instead of K8s ----------
+    /* ---------- OPTIONAL: Docker Swarm instead of K8s ---------- */
      stage('Deploy to Docker Swarm') {
        steps {
          script {
