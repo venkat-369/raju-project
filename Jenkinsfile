@@ -36,7 +36,7 @@ pipeline {
         }
       }
     }
-
+/*
     stage('Deploy to Kubernetes') {
       when { expression { return fileExists('k8s/deployment.yaml') } }
       steps {
@@ -50,26 +50,27 @@ pipeline {
         }
       }
     }
+    */
 
-    // ---------- OPTIONAL: Docker Swarm instead of K8s ----------
-    // stage('Deploy to Docker Swarm') {
-    //   steps {
-    //     script {
-    //       withCredentials([usernamePassword(credentialsId: 'docker-hub',
-    //                                        usernameVariable: 'DH_USER',
-    //                                        passwordVariable: 'DH_PASS')]) {
-    //         sh """
-    //           set -eux
-    //           echo "\$DH_PASS" | docker login -u "\$DH_USER" --password-stdin
-    //           docker swarm init 2>/dev/null || true
-    //           docker service create --name memento-web --replicas 3 -p 8080:80 \\
-    //              "\$DH_USER/memento-web:${IMAGE_TAG}" || \\
-    //           docker service update --image "\$DH_USER/memento-web:${IMAGE_TAG}" memento-web
-    //         """
-    //       }
-    //     }
-    //   }
-    // }
+     ---------- OPTIONAL: Docker Swarm instead of K8s ----------
+     stage('Deploy to Docker Swarm') {
+       steps {
+         script {
+           withCredentials([usernamePassword(credentialsId: 'docker-hub',
+                                            usernameVariable: 'DH_USER',
+                                            passwordVariable: 'DH_PASS')]) {
+             sh """
+               set -eux
+               echo "\$DH_PASS" | docker login -u "\$DH_USER" --password-stdin
+               docker swarm init 2>/dev/null || true
+               docker service create --name memento-web --replicas 3 -p 8080:80 \\
+                  "\$DH_USER/memento-web:${IMAGE_TAG}" || \\
+               docker service update --image "\$DH_USER/memento-web:${IMAGE_TAG}" memento-web
+           """
+           }
+         }
+       }
+     }
   }
 
   post {
