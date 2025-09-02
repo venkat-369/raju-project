@@ -63,7 +63,7 @@ pipeline {
                set -eux
                echo "\$DH_PASS" | docker login -u "\$DH_USER" --password-stdin
                docker swarm init 2>/dev/null || true
-               docker service create --name memento-web --replicas 3 -p 8080:80 \\
+               docker service create --name memento-web --replicas 2 -p 8076:80 \\
                   "\$DH_USER/memento-web:${IMAGE_TAG}" || \\
                docker service update --image "\$DH_USER/memento-web:${IMAGE_TAG}" memento-web
            """
