@@ -1,24 +1,90 @@
- color: #fff;
-      text-align: center;
-      padding: 2rem;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Memento Photography</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --muted: #111827;
+      --text: #e5e7eb;
+      --accent: #60a5fa;
+      --accent-2: #f472b6;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 10% -10%, rgba(96,165,250,.25), transparent),
+                  radial-gradient(1000px 700px at 110% 10%, rgba(244,114,182,.18), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-      nav ul {
-        flex-direction: column;
-      }
+    header {
+      padding: 4rem 1.25rem 2rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      margin: 0 0 .5rem 0;
+      letter-spacing: .5px;
+    }
+    header p { margin: 0; opacity: .9; }
+
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(17,24,39,.7);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    nav ul {
+      list-style: none; margin: 0; padding: .75rem 1rem;
+      display: flex; gap: 1rem; align-items: center; justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--text); text-decoration: none; font-weight: 600;
+      padding: .5rem .9rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    nav a:hover { border-color: rgba(255,255,255,.25); }
+
+    main { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+
+    section { margin: 3rem 0; background: rgba(17,24,39,.45); border: 1px solid rgba(255,255,255,.06);
+      border-radius: 20px; padding: 1.5rem; }
+    section h2 { margin: .25rem 0 1rem; font-size: clamp(1.25rem, 3.5vw, 2rem); }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .card { background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 1rem; }
+
+    .cta {
+      display: inline-block; margin-top: .5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b0f14; font-weight: 800; text-decoration: none;
+      padding: .7rem 1rem; border-radius: 999px;
+    }
+
+    footer { text-align: center; opacity: .75; padding: 2rem 1rem 3rem; }
+
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      nav ul { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Memento Fotography</h1>
-    <p>We Make Every Moment Memorible</p>
+    <h1>Memento Photography</h1>
+    <p>We Make Every Moment Memorable</p>
   </header>
 
   <nav>
@@ -30,9 +96,46 @@
     </ul>
   </nav>
 
-  <section id="about">
-    <h2>About Memento</h2>
-    <p>
-      Memento is a professional photography service dedicated to capturing life's most precious moments. Whether it's a wedding, a family portrait, or a special event, we bring passion and creativity to every shot.
-    </p>
-  </section>
+  <main>
+    <section id="about">
+      <h2>About Memento</h2>
+      <p>
+        Memento is a professional photography service dedicated to capturing life's most precious moments. Whether it's a wedding,
+        a family portrait, or a special event, we bring passion and creativity to every shot.
+      </p>
+      <a class="cta" href="#contact">Book a Session</a>
+    </section>
+
+    <section id="services">
+      <h2>Services</h2>
+      <div class="grid">
+        <div class="card"><strong>Weddings</strong><br/>Timeless coverage of your big day.</div>
+        <div class="card"><strong>Portraits</strong><br/>Studio & outdoor portrait sessions.</div>
+        <div class="card"><strong>Events</strong><br/>Corporate, cultural & social events.</div>
+      </div>
+    </section>
+
+    <section id="portfolio">
+      <h2>Portfolio</h2>
+      <div class="grid">
+        <div class="card">Sample Shot #1</div>
+        <div class="card">Sample Shot #2</div>
+        <div class="card">Sample Shot #3</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: hello@memento.example · Phone: +91-90000-00000</p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="y"></span> Memento Photography
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
