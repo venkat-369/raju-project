@@ -1,140 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyHome Real Estate</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShopEase – Your Everything Store</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f8f9fa;
-      color: #333;
+    :root{
+      --bg:#0f1111;          /* header bg */
+      --bg-darker:#0b0c0c;   /* hover */
+      --accent:#febd69;      /* search button */
+      --accent-2:#f3a847;    /* hover */
+      --text:#e5e7eb;        /* light */
+      --muted:#9ca3af;       /* gray */
+      --chip:#232f3e;        /* subnav */
+      --card:#ffffff;        /* cards */
+      --link:#2563eb;        /* link blue */
     }
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
-    header p {
-      margin: 5px 0 0;
-      font-size: 1.2rem;
-    }
-    nav {
-      background: #34495e;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .hero {
-      background: url("https://images.unsplash.com/photo-1568605114967-8130f3a36994") no-repeat center center/cover;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 2px 2px 5px black;
-    }
-    .hero h2 {
-      font-size: 3rem;
-      margin: 0;
-    }
-    .content {
-      padding: 40px;
-      text-align: center;
-    }
-    .content h3 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .properties {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      width: 300px;
-      overflow: hidden;
-    }
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .card h4 {
-      margin: 15px;
-    }
-    .card p {
-      margin: 0 15px 15px;
-      color: #555;
-    }
-    footer {
-      background: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#f3f4f6;color:#111827}
+
+    /* Top Header */
+    .header{background:var(--bg);color:var(--text)}
+    .header-inner{max-width:1300px;margin:auto;display:grid;grid-template-columns:190px 180px 1fr 120px 120px 90px;gap:10px;align-items:center;padding:10px 16px}
+    .brand{display:flex;gap:8px;align-items:center;text-decoration:none;color:var(--text)}
+    .brand .logo{width:34px;height:34px;border-radius:6px;background:linear-gradient(135deg,#111,#374151)}
+    .brand span{font-weight:700;letter-spacing:.3px}
+
+    .location{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px}
+    .location:hover{background:var(--bg-darker)}
+    .location svg{width:18px;height:18px;fill:#d1d5db}
+    .location small{display:block;color:var(--muted);line-height:1}
+
+    .search{display:grid;grid-template-columns:140px 1fr 56px;border-radius:10px;overflow:hidden}
+    .search select{border:none;padding:10px;background:#e5e7eb}
+    .search input{border:none;padding:10px 12px}
+    .search button{border:none;background:var(--accent)}
+    .search button:hover{background:var(--accent-2);cursor:pointer}
+    .search button svg{width:22px;height:22px}
+
+    .nav-btn{color:var(--text);text-decoration:none;padding:6px 8px;border-radius:8px;display:block;text-align:center}
+    .nav-btn:hover{background:var(--bg-darker)}
+    .cart{display:flex;align-items:center;justify-content:center;gap:6px}
+    .cart svg{width:22px;height:22px;fill:#fff}
+
+    /* Subnav */
+    .subnav{background:var(--chip);color:var(--text)}
+    .subnav-inner{max-width:1300px;margin:auto;display:flex;gap:14px;align-items:center;padding:8px 16px;overflow:auto}
+    .chip{white-space:nowrap;padding:8px 10px;border-radius:8px}
+    .chip:hover{background:#1f2937;cursor:pointer}
+
+    /* Hero */
+    .hero{max-width:1300px;margin:14px auto;position:relative;border-radius:14px;overflow:hidden}
+    .hero-slide{display:none;min-height:300px;background:#111;color:#fff;display:grid;place-items:center}
+    .hero-slide.active{display:grid}
+    .hero .controls{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 8px}
+    .hero .controls button{background:rgba(0,0,0,.35);border:none;color:#fff;padding:10px;border-radius:50%;backdrop-filter:blur(4px);cursor:pointer}
+
+    /* Deal cards */
+    .grid{max-width:1300px;margin:0 auto;display:grid;gap:16px;padding:0 16px 16px}
+    .grid.cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:16px}
+    .card h3{margin:0 0 10px;font-size:18px}
+    .card .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .tile{background:#f9fafb;border:1px solid #eef2f7;border-radius:10px;height:110px;display:grid;place-items:center;font-size:13px}
+    .card a{color:var(--link);text-decoration:none}
+
+    /* Product grid */
+    .grid.products{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+    .product{background:#fff;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.05);overflow:hidden;display:flex;flex-direction:column}
+    .product img{width:100%;height:160px;object-fit:cover}
+    .product .p-body{padding:12px;display:grid;gap:6px}
+    .price{font-weight:700}
+    .strike{color:#6b7280;text-decoration:line-through;font-weight:500;font-size:12px}
+    .star{font-size:12px;color:#f59e0b}
+    .btn{display:inline-block;background:#111827;color:#fff;border:none;border-radius:10px;padding:10px 12px;text-align:center;text-decoration:none}
+    .btn:hover{filter:brightness(1.1)}
+
+    /* Footer */
+    .footer{background:#111827;color:#d1d5db;margin-top:24px}
+    .footer .top{max-width:1300px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;padding:24px 16px}
+    .footer h4{margin:0 0 10px;font-size:14px;color:#fff}
+    .footer a{display:block;color:#cbd5e1;text-decoration:none;margin:6px 0}
+    .footer a:hover{text-decoration:underline}
+    .copyright{background:#0f1111;color:#9ca3af;text-align:center;padding:14px}
+
+    /* Responsive tweaks */
+    @media (max-width: 980px){
+      .header-inner{grid-template-columns:150px 1fr 56px;gap:8px}
+      .location,.nav-btn,.cart .label{display:none}
+      .search{grid-column:span 2}
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>MyHome Real Estate</h1>
-    <p>Owned by Raju</p>
+  <!-- Header -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <a class="brand" href="#" aria-label="ShopEase Home">
+        <div class="logo" aria-hidden="true"></div>
+        <span>ShopEase</span>
+      </a>
+
+      <div class="location" role="button" aria-label="Choose delivery location" tabindex="0">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+        <div>
+          <small>Deliver to</small>
+          <div>Hyderabad 500001</div>
+        </div>
+      </div>
+
+      <form class="search" role="search" onsubmit="event.preventDefault(); alert('Searching: '+document.querySelector('#q').value)">
+        <label class="sr-only" for="cat">Category</label>
+        <select id="cat" aria-label="Select category">
+          <option>All</option>
+          <option>Mobiles</option>
+          <option>Fashion</option>
+          <option>Home</option>
+          <option>Electronics</option>
+          <option>Books</option>
+        </select>
+        <input id="q" placeholder="Search ShopEase" aria-label="Search" />
+        <button aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 1 0 4.9 14.3l4.4 4.4 1.4-1.4-4.4-4.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12A6 6 0 0 1 10 4z"/></svg>
+        </button>
+      </form>
+
+      <a class="nav-btn" href="#" aria-label="Language & region">EN</a>
+      <a class="nav-btn" href="#" aria-label="Account & Lists">Hello, Sign in<br><strong>Account & Lists</strong></a>
+      <a class="nav-btn cart" href="#" aria-label="Cart">
+        <svg viewBox="0 0 24 24" aria-hidden><path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0-.001 3.999A2 2 0 0 0 17 18zM7.2 14h9.9a2 2 0 0 0 1.9-1.4l2.7-8H6.1l-.6-2H2v2h1.5l2.7 9a2 2 0 0 0 1.9 1.4z"/></svg>
+        <span class="label">Cart</span>
+      </a>
+    </div>
   </header>
 
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Properties</a>
-    <a href="#">About Us</a>
-    <a href="#">Contact</a>
+  <!-- Subnav -->
+  <nav class="subnav" aria-label="Secondary">
+    <div class="subnav-inner">
+      <div class="chip">All</div>
+      <div class="chip">Best Sellers</div>
+      <div class="chip">Mobiles</div>
+      <div class="chip">Customer Service</div>
+      <div class="chip">Fashion</div>
+      <div class="chip">Electronics</div>
+      <div class="chip">Prime</div>
+      <div class="chip">Home & Kitchen</div>
+      <div class="chip">New Releases</div>
+      <div class="chip">Today's Deals</div>
+    </div>
   </nav>
 
-  <section class="hero">
-    <h2>Your Dream Home Awaits</h2>
-  </section>
-
-  <section class="content">
-    <h3>Featured Properties</h3>
-    <div class="properties">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Luxury Villa">
-        <h4>Luxury Villa</h4>
-        <p>Beautiful 4BHK villa with garden and pool.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c" alt="Modern Apartment">
-        <h4>Modern Apartment</h4>
-        <p>2BHK apartment with stunning city views.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154" alt="Family Home">
-        <h4>Family Home</h4>
-        <p>Spacious 3BHK perfect for families.</p>
-      </div>
+  <!-- Hero Carousel -->
+  <section class="hero" aria-label="Featured banners">
+    <div class="hero-slide active" style="background:url('https://images.unsplash.com/photo-1511385348-a52b4a160dc2?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat">
+      <h2 style="background:rgba(0,0,0,.45);padding:10px 14px;border-radius:10px">Mega Electronics Sale – Up to 60% Off</h2>
+    </div>
+    <div class="hero-slide" style="background:url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat">
+      <h2 style="background:rgba(0,0,0,.45);padding:10px 14px;border-radius:10px">Fashion Fiesta – New Arrivals</h2>
+    </div>
+    <div class="hero-slide" style="background:url('https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat">
+      <h2 style="background:rgba(0,0,0,.45);padding:10px 14px;border-radius:10px">Books & Stationery – Study Smart</h2>
+    </div>
+    <div class="controls">
+      <button aria-label="Previous" onclick="prevSlide()">◀</button>
+      <button aria-label="Next" onclick="nextSlide()">▶</button>
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 MyHome Real Estate | Owned by raju</p>
+  <!-- Deal Cards -->
+  <section class="grid cards" aria-label="Top deals">
+    <article class="card">
+      <h3>Up to 70% off | Home essentials</h3>
+      <div class="tiles">
+        <div class="tile">Bedsheets</div>
+        <div class="tile">Cookware</div>
+        <div class="tile">Storage</div>
+        <div class="tile">Home décor</div>
+      </div>
+      <p><a href="#">See more</a></p>
+    </article>
+    <article class="card">
+      <h3>Gaming corner</h3>
+      <div class="tiles">
+        <div class="tile">Consoles</div>
+        <div class="tile">Headsets</div>
+        <div class="tile">Chairs</div>
+        <div class="tile">Keyboards</div>
+      </div>
+      <p><a href="#">Explore now</a></p>
+    </article>
+    <article class="card">
+      <h3>Appliances for your home</h3>
+      <div class="tiles">
+        <div class="tile">ACs</div>
+        <div class="tile">Refrigerators</div>
+        <div class="tile">Microwaves</div>
+        <div class="tile">Washing Machines</div>
+      </div>
+      <p><a href="#">Shop all</a></p>
+    </article>
+    <article class="card">
+      <h3>Sign in for best experience</h3>
+      <p>Get personalized deals, fast checkout and more.</p>
+      <p><a class="btn" href="#">Sign in securely</a></p>
+    </article>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="grid products" aria-label="Products">
+    <!-- Product Item Template (repeat as needed) -->
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop" alt="Laptop" />
+      <div class="p-body">
+        <div>UltraBook Pro 14" 16GB/512GB</div>
+        <div class="star">★★★★☆ (1,248)</div>
+        <div><span class="price">₹59,990</span> <span class="strike">₹79,990</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1512303380168-965c978ec88b?q=80&w=1200&auto=format&fit=crop" alt="Headphones" />
+      <div class="p-body">
+        <div>NoiseCancel Max Wireless Headphones</div>
+        <div class="star">★★★★★ (7,540)</div>
+        <div><span class="price">₹3,499</span> <span class="strike">₹6,999</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1512446733611-9099a758e63e?q=80&w=1200&auto=format&fit=crop" alt="Sneakers" />
+      <div class="p-body">
+        <div>RunLite Sneakers</div>
+        <div class="star">★★★★☆ (2,302)</div>
+        <div><span class="price">₹2,299</span> <span class="strike">₹3,999</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Keyboard" />
+      <div class="p-body">
+        <div>MechaKeys RGB TKL Keyboard</div>
+        <div class="star">★★★★☆ (4,112)</div>
+        <div><span class="price">₹4,699</span> <span class="strike">₹6,499</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1520975682031-ae8e9d0f0f59?q=80&w=1200&auto=format&fit=crop" alt="Smartwatch" />
+      <div class="p-body">
+        <div>PulseTrack Smartwatch</div>
+        <div class="star">★★★☆☆ (980)</div>
+        <div><span class="price">₹1,999</span> <span class="strike">₹2,999</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+
+    <article class="product">
+      <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1200&auto=format&fit=crop" alt="Camera" />
+      <div class="p-body">
+        <div>SnapShot Mirrorless 24MP</div>
+        <div class="star">★★★★★ (1,102)</div>
+        <div><span class="price">₹42,990</span> <span class="strike">₹49,990</span></div>
+        <a class="btn" href="#">Add to Cart</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="top">
+      <div>
+        <h4>Get to Know Us</h4>
+        <a href="#">About ShopEase</a>
+        <a href="#">Careers</a>
+        <a href="#">Press Releases</a>
+        <a href="#">ShopEase Science</a>
+      </div>
+      <div>
+        <h4>Connect with Us</h4>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+      <div>
+        <h4>Make Money with Us</h4>
+        <a href="#">Sell on ShopEase</a>
+        <a href="#">Affiliate Program</a>
+        <a href="#">Advertise Your Products</a>
+        <a href="#">Fulfilment by ShopEase</a>
+      </div>
+      <div>
+        <h4>Let Us Help You</h4>
+        <a href="#">Your Account</a>
+        <a href="#">Returns Centre</a>
+        <a href="#">100% Purchase Protection</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+    <div class="copyright">© <span id="yr"></span> ShopEase. This is a demo UI inspired by ecommerce layouts.</div>
   </footer>
+
+  <script>
+    // Simple Carousel
+    const slides = Array.from(document.querySelectorAll('.hero-slide'));
+    let idx = 0;
+    function show(i){ slides.forEach((s,j)=>s.classList.toggle('active', j===i)); }
+    function nextSlide(){ idx = (idx+1) % slides.length; show(idx); }
+    function prevSlide(){ idx = (idx-1+slides.length) % slides.length; show(idx); }
+    setInterval(nextSlide, 5000);
+
+    // Year in footer
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
